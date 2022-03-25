@@ -1,0 +1,30 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 500,
+  "height": 550,
+  "params": [{"name": "numU", "select": "point"}],
+  "data": {
+    "url": "https://raw.githubusercontent.com/Thanawin16/vega-lite/main/district.json.json",
+    "format": {"type": "topojson", "feature": "geodata"}
+  },
+  "transform": [
+    {
+      "lookup": "properties.dcode",
+      "from": {
+        "data": {
+          "url": "https://raw.githubusercontent.com/Thanawin16/vega-lite/main/hospital_bma-23.csv"
+        },
+        "key": "dcode",
+        "fields": ["bed_61"]
+      }
+    }
+  ],
+  "projection": {"type": "Mercator"},
+  "mark": {"type": "geoshape", "stroke": "#757575", "strokeWidth": 0.5},
+  "encoding": {
+    "color": {
+      "condition": {"param": "numU", "field": "bed_61", "type": "quantitative"}
+    }
+  },
+  "config": {}
+}
